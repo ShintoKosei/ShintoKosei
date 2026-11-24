@@ -8,13 +8,10 @@
   </a>
   <br /><br />
   <sub>
-    <a href="https://8526.nl">8526.nl</a> ·
-    <a href="mailto:shintokosei@qq.com">Email</a> ·
-    <a href="https://x.com/NL8526">X</a> ·
-    <a href="https://t.me/HiNL7">Telegram</a> ·
-    <a href="https://discord.gg/NbVQ6DwT">Discord</a> ·
-    <a href="https://c7.io/@NL8526">Mastodon</a> ·
-    <a href="https://listenbrainz.org/user/NL8526">ListenBrainz</a> ·
-    <a href="https://8526.nl/gpg">GPG</a>
+    <strong>简体中文</strong> / <a href="./README.en.md">English</a>
+    &nbsp;·&nbsp;
+    <a href="https://8526.nl">8526.nl</a>
+    &nbsp;·&nbsp;
+    <a href="mailto:shintokosei@qq.com">Email</a>
   </sub>
 </div>

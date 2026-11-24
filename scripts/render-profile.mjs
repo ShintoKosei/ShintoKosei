@@ -10,11 +10,11 @@ const subsetFont = require("subset-font");
 const FONT_WOFF2 = "d:\\8526.nl\\assets\\fonts\\custom-font.woff2";
 const OUT_DIR = "d:\\ShintoKosei\\assets";
 const WIDTH = 840;
+const HEIGHT = 414;
 const RENDER_WIDTH = 1680; // 2x Retina
 
 const THEMES = {
   light: {
-    surface: "#FFF8F7",
     surfaceLow: "#FFF0F0",
     surfaceContainer: "#FCEAE9",
     primary: "#8F4A4C",
@@ -30,7 +30,6 @@ const THEMES = {
     fishOpacity: "0.26",
   },
   dark: {
-    surface: "#1A1111",
     surfaceLow: "#221919",
     surfaceContainer: "#271D1D",
     primary: "#FFB3B3",
@@ -44,6 +43,67 @@ const THEMES = {
     fishInner: "#2C2222",
     fishSpiral: "#FF8FAB",
     fishOpacity: "0.30",
+  },
+};
+
+const LOCALES = {
+  zh: {
+    suffix: "",
+    titleMain: "柠凉",
+    titleSub: "· ShintoKosei",
+    titleSubX: 128,
+    subtitle: "Student · Developer / Designer",
+    bio1: "从写代码到编曲、从建模到运维，横跨开发、设计、媒体与硬件多个方向。",
+    bio2: "不精于某一领域，但乐于在每个领域里做到「能用」，慢慢把想法变成现实。",
+    domains: [
+      [
+        { label: "全栈开发", w: 92 },
+        { label: "视觉设计", w: 92 },
+        { label: "音乐制作", w: 92 },
+        { label: "视频剪辑", w: 92 },
+        { label: "网络运维", w: 92 },
+        { label: "服务器架设", w: 104 },
+      ],
+      [
+        { label: "逆向学习", w: 92 },
+        { label: "硬件折腾", w: 92 },
+        { label: "3D 打印", w: 86 },
+        { label: "直播推流", w: 92 },
+        { label: "内容运营", w: 92 },
+      ],
+    ],
+    stack:
+      "Python · Java · TypeScript · Vite · Docker · Linux · Blender · Pr / Ai / PS · DAW / VOCALOID · OBS · 软路由 · FDM / 光固化",
+    footer: "Site: 8526.nl   ·   Email: shintokosei@qq.com",
+  },
+  en: {
+    suffix: "-en",
+    titleMain: "ShintoKosei",
+    titleSub: "· 柠凉",
+    titleSubX: 230,
+    subtitle: "Student · Developer / Designer",
+    bio1: "From coding to music production, 3D modeling to sysadmin—exploring dev, design, media, and hardware.",
+    bio2: "Not a master of one, just aiming to make things work across every domain and turn ideas into reality.",
+    domains: [
+      [
+        { label: "Full-Stack Dev", w: 122 },
+        { label: "Visual Design", w: 112 },
+        { label: "Music Prod", w: 100 },
+        { label: "Video Editing", w: 112 },
+        { label: "Networking", w: 102 },
+        { label: "Self-Hosting", w: 106 },
+      ],
+      [
+        { label: "Reverse Eng", w: 106 },
+        { label: "Hardware", w: 94 },
+        { label: "3D Printing", w: 102 },
+        { label: "Live Streaming", w: 120 },
+        { label: "Content Ops", w: 108 },
+      ],
+    ],
+    stack:
+      "Python · Java · TypeScript · Vite · Docker · Linux · Blender · Pr / Ai / PS · DAW / VOCALOID · OBS · OpenWrt · FDM / SLA",
+    footer: "Website: 8526.nl   ·   Email: shintokosei@qq.com",
   },
 };
 
@@ -84,28 +144,9 @@ function readName(buf, wantedId) {
   return null;
 }
 
-const DOMAIN_ROWS = [
-  [
-    { label: "全栈开发", w: 92 },
-    { label: "视觉设计", w: 92 },
-    { label: "音乐制作", w: 92 },
-    { label: "视频剪辑", w: 92 },
-    { label: "网络运维", w: 92 },
-    { label: "服务器架设", w: 104 },
-  ],
-  [
-    { label: "逆向学习", w: 92 },
-    { label: "硬件折腾", w: 92 },
-    { label: "3D 打印", w: 86 },
-    { label: "直播推流", w: 92 },
-    { label: "内容运营", w: 92 },
-  ],
-];
-
-function buildSvg(t) {
-  const height = 436;
+function buildSvg(t, l) {
   const chips = [];
-  DOMAIN_ROWS.forEach((row, rIdx) => {
+  l.domains.forEach((row, rIdx) => {
     let x = 40;
     const y = 232 + rIdx * 40;
     for (const item of row) {
@@ -117,7 +158,7 @@ function buildSvg(t) {
     }
   });
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${WIDTH} ${height}" width="${WIDTH}" height="${height}">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${WIDTH} ${HEIGHT}" width="${WIDTH}" height="${HEIGHT}">
   <defs>
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="${t.surfaceLow}" />
@@ -128,13 +169,13 @@ function buildSvg(t) {
       <stop offset="100%" stop-color="${t.primary}" stop-opacity="0" />
     </radialGradient>
     <clipPath id="cardClip">
-      <rect x="2" y="2" width="${WIDTH - 4}" height="${height - 4}" rx="26" />
+      <rect x="2" y="2" width="${WIDTH - 4}" height="${HEIGHT - 4}" rx="26" />
     </clipPath>
   </defs>
 
   <g clip-path="url(#cardClip)">
-    <rect x="2" y="2" width="${WIDTH - 4}" height="${height - 4}" rx="26" fill="url(#bgGrad)" />
-    <rect x="2" y="2" width="${WIDTH - 4}" height="${height - 4}" rx="26" fill="url(#roseGlow)" />
+    <rect x="2" y="2" width="${WIDTH - 4}" height="${HEIGHT - 4}" rx="26" fill="url(#bgGrad)" />
+    <rect x="2" y="2" width="${WIDTH - 4}" height="${HEIGHT - 4}" rx="26" fill="url(#roseGlow)" />
 
     <!-- 鱼板装饰（与 8526.nl 主页一致） -->
     <g transform="translate(680 18) scale(1.25) rotate(-12 64 64)" opacity="${t.fishOpacity}">
@@ -144,20 +185,20 @@ function buildSvg(t) {
     </g>
   </g>
 
-  <rect x="2" y="2" width="${WIDTH - 4}" height="${height - 4}" rx="26" fill="none" stroke="${t.outlineVariant}" stroke-width="1.2" />
+  <rect x="2" y="2" width="${WIDTH - 4}" height="${HEIGHT - 4}" rx="26" fill="none" stroke="${t.outlineVariant}" stroke-width="1.2" />
 
   <!-- 顶部标识 -->
   <rect x="40" y="34" width="94" height="26" rx="13" fill="${t.primaryContainer}" />
   <text x="87" y="51.5" text-anchor="middle" font-size="12.5" fill="${t.onPrimaryContainer}">8526.nl</text>
 
   <!-- 标题与角色 -->
-  <text x="40" y="102" font-size="38" fill="${t.onSurface}">柠凉</text>
-  <text x="128" y="100" font-size="20" fill="${t.primary}">· ShintoKosei</text>
-  <text x="40" y="132" font-size="14.5" fill="${t.onSurfaceVariant}">Student · Developer / Designer</text>
+  <text x="40" y="102" font-size="38" fill="${t.onSurface}">${escapeXml(l.titleMain)}</text>
+  <text x="${l.titleSubX}" y="100" font-size="20" fill="${t.primary}">${escapeXml(l.titleSub)}</text>
+  <text x="40" y="132" font-size="14.5" fill="${t.onSurfaceVariant}">${escapeXml(l.subtitle)}</text>
 
-  <!-- 适合 GitHub 的简洁介绍 -->
-  <text x="40" y="166" font-size="14" fill="${t.onSurfaceVariant}">从写代码到编曲、从建模到运维，横跨开发、设计、媒体与硬件多个方向。</text>
-  <text x="40" y="189" font-size="14" fill="${t.onSurfaceVariant}">不精于某一领域，但乐于在每个领域里做到「能用」，慢慢把想法变成现实。</text>
+  <!-- 简洁介绍 -->
+  <text x="40" y="166" font-size="14" fill="${t.onSurfaceVariant}">${escapeXml(l.bio1)}</text>
+  <text x="40" y="189" font-size="14" fill="${t.onSurfaceVariant}">${escapeXml(l.bio2)}</text>
 
   <!-- 分割线 -->
   <line x1="40" y1="210" x2="800" y2="210" stroke="${t.outlineVariant}" stroke-width="1" opacity="0.65" />
@@ -166,18 +207,17 @@ function buildSvg(t) {
 ${chips.join("\n")}
 
   <!-- 技术栈 -->
-  <text x="40" y="334" font-size="12.5" fill="${t.primary}">Python · Java · TypeScript · Vite · Docker · Linux · Blender · Pr / Ai / PS · DAW / VOCALOID · OBS · 软路由 · FDM / 光固化</text>
+  <text x="40" y="334" font-size="12.5" fill="${t.primary}">${escapeXml(l.stack)}</text>
 
-  <!-- 底部分割线与联系信息 -->
+  <!-- 底部分割线与联系信息（仅网站与邮箱） -->
   <line x1="40" y1="358" x2="800" y2="358" stroke="${t.outlineVariant}" stroke-width="1" opacity="0.65" />
-  <text x="40" y="384" font-size="12.5" fill="${t.onSurfaceVariant}">Site: 8526.nl   ·   Email: shintokosei@qq.com   ·   X: @NL8526   ·   Telegram: @HiNL7</text>
-  <text x="40" y="406" font-size="12.5" fill="${t.onSurfaceVariant}">Mastodon: @NL8526@c7.io   ·   ListenBrainz: NL8526   ·   GPG: 8526 CFFF FF7F 8526</text>
+  <text x="40" y="387" font-size="13" fill="${t.onSurfaceVariant}">${escapeXml(l.footer)}</text>
 </svg>
 `;
 }
 
-const sampleSvg = buildSvg(THEMES.light);
-const allChars = Array.from(new Set(sampleSvg.replace(/<[^>]+>/g, ""))).join("");
+const allSvgs = Object.values(LOCALES).map((l) => buildSvg(THEMES.light, l)).join("");
+const allChars = Array.from(new Set(allSvgs.replace(/<[^>]+>/g, ""))).join("");
 
 const ttf = await subsetFont(readFileSync(FONT_WOFF2), allChars, {
   targetFormat: "truetype",
@@ -193,18 +233,21 @@ const family = readName(ttf, 1);
 if (!family) throw new Error("Failed to read CustomFont family name");
 
 mkdirSync(OUT_DIR, { recursive: true });
-for (const [mode, theme] of Object.entries(THEMES)) {
-  const svg = buildSvg(theme);
-  const resvg = new Resvg(svg, {
-    font: {
-      fontFiles: [ttfPath],
-      loadSystemFonts: false,
-      defaultFontFamily: family,
-    },
-    fitTo: { mode: "width", value: RENDER_WIDTH },
-  });
-  writeFileSync(path.join(OUT_DIR, `profile-${mode}.png`), resvg.render().asPng());
+for (const locale of Object.values(LOCALES)) {
+  for (const [mode, theme] of Object.entries(THEMES)) {
+    const svg = buildSvg(theme, locale);
+    const resvg = new Resvg(svg, {
+      font: {
+        fontFiles: [ttfPath],
+        loadSystemFonts: false,
+        defaultFontFamily: family,
+      },
+      fitTo: { mode: "width", value: RENDER_WIDTH },
+    });
+    const outFile = path.join(OUT_DIR, `profile${locale.suffix}-${mode}.png`);
+    writeFileSync(outFile, resvg.render().asPng());
+  }
 }
 
 rmSync(fontDir, { recursive: true, force: true });
-console.log("Rendered profile-light.png & profile-dark.png with font:", family);
+console.log("Rendered zh/en light/dark profile PNGs with font:", family);
